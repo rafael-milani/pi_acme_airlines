@@ -21,5 +21,5 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
 
     void _onUpdateTask(UpdateTask event, Emitter<TasksState> emit){}
 
-    void _onDeleteTask(UpdateTask event, Emitter<TasksState> emit){}
+    void _onDeleteTask(DeleteTask event, Emitter<TasksState> emit){}
 }
