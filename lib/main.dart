@@ -1,15 +1,18 @@
-import 'package:acme_airlines_pi/blocs/bloc/tasks_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
+
 import 'package:acme_airlines_pi/screens/login.dart';
 import 'package:acme_airlines_pi/screens/principal.dart';
 
 import 'blocs/bloc_exports.dart';
-import 'models/task.dart';
+import 'screens/add_task_screen.dart';
 
-void main() {
-  BlocOverrides.runZoned(
-  () => runApp(const Aplicativo()),
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  HydratedBloc.storage = await HydratedStorage.build(
+    storageDirectory: await getTemporaryDirectory(),
   );
+  runApp(const Aplicativo());
 }
 
 class Aplicativo extends StatelessWidget {
@@ -18,10 +21,7 @@ class Aplicativo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => TasksBloc()
-      ..add(AddTask(
-        task: Task(title: 'Task1')
-      )),
+      create: (context) => TasksBloc(),
       child: MaterialApp(
         initialRoute: "/",
         routes: {
