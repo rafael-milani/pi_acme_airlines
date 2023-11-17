@@ -1,3 +1,4 @@
+import 'package:acme_airlines_pi/services/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -12,11 +13,12 @@ void main() async {
   HydratedBloc.storage = await HydratedStorage.build(
     storageDirectory: await getTemporaryDirectory(),
   );
-  runApp(const Aplicativo());
+  runApp( Aplicativo(appRouter: AppRouter(),));
 }
 
 class Aplicativo extends StatelessWidget {
-  const Aplicativo({super.key});
+  const Aplicativo({super.key, required this.appRouter});
+  final AppRouter appRouter;
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +30,7 @@ class Aplicativo extends StatelessWidget {
           "/": (context) => const Login(),
           "principal/": (context) => const Principal(),
         },
+        onGenerateRoute: appRouter.onGenerateRoute,
       ),
     );
   }

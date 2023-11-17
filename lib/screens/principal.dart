@@ -1,4 +1,5 @@
 import 'package:acme_airlines_pi/screens/add_task_screen.dart';
+import 'package:acme_airlines_pi/screens/my_drawer.dart';
 import 'package:acme_airlines_pi/widgets/tasks_list.dart';
 import 'package:flutter/material.dart';
 
@@ -7,7 +8,7 @@ import '../models/task.dart';
 
 class Principal extends StatefulWidget {
   const Principal({Key? key}) : super(key: key);
-
+  static const id = 'principal_screen';
   @override
   State<Principal> createState() => _PrincipalState();
 }
@@ -37,13 +38,14 @@ class _PrincipalState extends State<Principal> {
             centerTitle: true,
             elevation: 0,
           ),
+          drawer: MyDrawer(),
           body: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Center(
+              Center(
                 child: Chip(
                   label: Text(
-                    'Tasks',
+                    '${state.allTasks.length} Tasks',
                   ),
                 ),
               ),

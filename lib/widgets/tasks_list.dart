@@ -1,5 +1,6 @@
 import 'package:acme_airlines_pi/blocs/bloc_exports.dart';
 import 'package:acme_airlines_pi/models/task.dart';
+import 'package:acme_airlines_pi/widgets/task_tile.dart';
 import 'package:flutter/material.dart';
 
 class TasksList extends StatelessWidget {
@@ -17,15 +18,7 @@ class TasksList extends StatelessWidget {
         itemCount: taskList.length,
         itemBuilder: (context,index){
           var task = taskList[index];
-          return ListTile(
-            title: Text(task.title),
-            trailing: Checkbox(
-              value: task.isDone,
-              onChanged: (value){
-                context.read<TasksBloc>().add(UpdateTask(task: task));
-              },
-            ),
-          );
+          return TaskTile(task: task);
         }),
     );
   }
