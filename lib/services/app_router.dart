@@ -1,5 +1,6 @@
-import 'package:acme_airlines_pi/screens/principal.dart';
+import 'package:acme_airlines_pi/screens/pending_screen.dart';
 import 'package:acme_airlines_pi/screens/recycle_bin.dart';
+import 'package:acme_airlines_pi/screens/tabs_screen.dart';
 import 'package:flutter/material.dart';
 
 class AppRouter{
@@ -9,9 +10,9 @@ class AppRouter{
       return MaterialPageRoute(
         builder: (_)=> const RecycleBin(),
         );
-      case Principal.id:
+      case TabsScreen.id:
       return MaterialPageRoute(
-        builder: (_)=> const Principal(),
+        builder: (_)=> TabsScreen(),
         );
         default: 
           return null;
