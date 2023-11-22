@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'dart:io';
 import 'package:acme_airlines_pi/screens/cadastro.dart';
 
 class Login extends StatefulWidget {
@@ -13,8 +16,29 @@ class Login extends StatefulWidget {
 
 class LoginState extends State<Login> {
   String error = "";
-  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+
+  void authenticate(String email, String password) async {
+    if(email.length == 0 || password.length == 0){
+      return setState(() {
+        error = "Email e/ou senha devem ser preenchidos.";
+      });
+    }
+
+    final url = Uri.parse('https://skystop.onrender.com/user/authenticate');
+    final jsonBody = {
+      'email': email,
+      'password': password
+    };
+    final body = jsonEncode(jsonBody);
+
+    final response = await http.post(url, headers: {"Content-Type": "application/json"}, body: body);
+    final responseBody = jsonDecode(response.body);
+    final authenticated = responseBody['authenticated'];
+
+    authenticated ? Navigator.pushNamed(context, "principal/") : setState(() { error = "Usuário e/ou senha inválidos"; });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,9 +82,9 @@ class LoginState extends State<Login> {
                         Radius.circular(26.0),
                       ),
                     ),
-                    labelText: "Username",
-                    hintText: "Digite seu usuário"),
-                controller: _usernameController,
+                    labelText: "Email",
+                    hintText: "Digite seu email"),
+                controller: _emailController,
                 validator: (value) {
                   if (value == null || value == "") {
                     return "Campo não pode estar vazio!";
@@ -103,16 +127,7 @@ class LoginState extends State<Login> {
                     child: const Text("Cadastre-se"),
                     ),
                     ElevatedButton(
-                      onPressed: () {
-                        if (_usernameController.text == "user" &&
-                            _passwordController.text == "123") {
-                          Navigator.pushNamed(context, "principal/");
-                        } else {
-                          setState(() {
-                            error = "Usuário e/ou senha inválidos";
-                          });
-                        }
-                      },
+                      onPressed: () => authenticate(_emailController.text, _passwordController.text),
                       child: const Text("Entrar"),
                     ),
                   ],
