@@ -11,114 +11,122 @@ class Login extends StatefulWidget {
 }
 
 class LoginState extends State<Login> {
-  String error = "";
+  String erro = "";
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Container(
-          margin: const EdgeInsets.only(top: 20.0),
-          padding: const EdgeInsets.all(10.0),
-          height: 360,
-          alignment: Alignment.topLeft,
-          child: Form(
+      body: SafeArea(
+        child: Center(
+          child: SingleChildScrollView(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Align(
-                  alignment: Alignment.center,
-                  child: Text(
-                    "Acme Airlines",
-                    style: TextStyle(
-                      fontSize: 32.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                const Align(
-                  alignment: Alignment.center,
-                  child: Text(
-                    "Fazer Login",
-                    style: TextStyle(
-                      fontSize: 24.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+                Icon(
+                  Icons.airplanemode_active,
+                  size: 150,
                 ),
                 SizedBox(
-                  child: TextFormField(
-                    decoration: const InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(26.0),
-                          ),
-                        ),
-                        labelText: "Username",
-                        hintText: "Digite seu usuário"),
-                    controller: _usernameController,
-                    validator: (value) {
-                      if (value == null || value == "") {
-                        return "Campo não pode estar vazio!";
-                      } else {
-                        return null;
-                      }
-                    },
-                  ),
-                ),
-                SizedBox(
-                  child: TextFormField(
-                    decoration: const InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(26.0),
-                          ),
-                        ),
-                        labelText: "Password",
-                        hintText: "*****"),
-                    controller: _passwordController,
-                    obscureText: true,
-                    validator: (value) {
-                      if (value == null || value == "") {
-                        return "Campo não pode estar vazio!";
-                      } else {
-                        return null;
-                      }
-                    },
-                  ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        if (_usernameController.text == "user" &&
-                            _passwordController.text == "123") {
-                          Navigator.pushNamed(context, "principal/");
-                        } else {
-                          setState(() {
-                            error = "Usuário e/ou senha inválidos";
-                          });
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                      ),
-                      child: const Padding(
-                        padding: EdgeInsets.all(
-                            10.0), // Adjust the padding as needed
-                        child: Text("Entrar"),
-                      ),
-                    ),
-                  ],
+                  height: 30,
                 ),
                 Text(
-                  error,
-                  style: const TextStyle(color: Colors.red, fontSize: 20.0),
+                  'Acme Airlines',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40),
+                ),
+                SizedBox(height: 10),
+                Text(
+                  'Bem vindo de volta!',
+                  style: TextStyle(
+                    fontSize: 20,
+                  ),
+                ),
+                SizedBox(height: 20),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(color: Colors.blue),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20.0),
+                      child: TextFormField(
+                        decoration: const InputDecoration(
+                            border: InputBorder.none, hintText: "Email"),
+                        controller: _usernameController,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 15),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(color: Colors.blue),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20.0),
+                      child: TextFormField(
+                        obscureText: true,
+                        decoration: const InputDecoration(
+                            border: InputBorder.none, hintText: "Senha"),
+                        controller: _passwordController,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 20),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      if (_usernameController.text.isEmpty ||
+                          _passwordController.text.isEmpty) {
+                        setState(() {
+                          erro = "Os campos não podem estar vazios!";
+                        });
+                      }
+                      else if (_usernameController.text == "user" &&
+                          _passwordController.text == "123") {
+                        Navigator.pushNamed(context, "principal/");
+                      } else {
+                        setState(() {
+                          erro = "Usuário e/ou senha inválidos";
+                        });
+                      }
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Center(
+                          child: Text(
+                        'Entrar',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
+                      )),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(erro, 
+                style: const TextStyle(color: Colors.red, fontSize: 20.0),
+                ),
+                SizedBox(
+                  height: 100,
                 ),
               ],
             ),

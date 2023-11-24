@@ -1,6 +1,7 @@
 import 'package:acme_airlines_pi/blocs/bloc_exports.dart';
 import 'package:acme_airlines_pi/screens/cadastro.dart';
 import 'package:acme_airlines_pi/screens/login.dart';
+import 'package:acme_airlines_pi/screens/my_profile.dart';
 import 'package:acme_airlines_pi/screens/tasks_screen.dart';
 import 'package:acme_airlines_pi/screens/tabs_screen.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +25,9 @@ class MyDrawer extends StatelessWidget {
             ),
           ),
                GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => const MyProfile()));
+                  },
                 child: ListTile(
                   leading: Icon(Icons.person),
                   title: Text('Meu Perfil'), 
