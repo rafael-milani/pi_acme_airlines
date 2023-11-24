@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'dart:io';
 import 'package:acme_airlines_pi/screens/cadastro.dart';
 
 class Login extends StatefulWidget {
@@ -12,8 +15,29 @@ class Login extends StatefulWidget {
 
 class LoginState extends State<Login> {
   String erro = "";
-  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+
+  void authenticate(String email, String password) async {
+    if(email.length == 0 || password.length == 0){
+      return setState(() {
+        error = "Email e/ou senha devem ser preenchidos.";
+      });
+    }
+
+    final url = Uri.parse('https://skystop.onrender.com/user/authenticate');
+    final jsonBody = {
+      'email': email,
+      'password': password
+    };
+    final body = jsonEncode(jsonBody);
+
+    final response = await http.post(url, headers: {"Content-Type": "application/json"}, body: body);
+    final responseBody = jsonDecode(response.body);
+    final authenticated = responseBody['authenticated'];
+
+    authenticated ? Navigator.pushNamed(context, "principal/") : setState(() { error = "Usuário e/ou senha inválidos"; });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +80,7 @@ class LoginState extends State<Login> {
                       child: TextFormField(
                         decoration: const InputDecoration(
                             border: InputBorder.none, hintText: "Email"),
-                        controller: _usernameController,
+                        controller: _emailController,
                       ),
                     ),
                   ),
@@ -85,22 +109,7 @@ class LoginState extends State<Login> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: GestureDetector(
-                    onTap: () {
-                      if (_usernameController.text.isEmpty ||
-                          _passwordController.text.isEmpty) {
-                        setState(() {
-                          erro = "Os campos não podem estar vazios!";
-                        });
-                      }
-                      else if (_usernameController.text == "user" &&
-                          _passwordController.text == "123") {
-                        Navigator.pushNamed(context, "principal/");
-                      } else {
-                        setState(() {
-                          erro = "Usuário e/ou senha inválidos";
-                        });
-                      }
-                    },
+                    onTap: () => authenticate(_emailController.text, _passwordController.text),
                     child: Container(
                       padding: EdgeInsets.all(20),
                       decoration: BoxDecoration(
