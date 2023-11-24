@@ -10,7 +10,6 @@ class Login extends StatefulWidget {
   }
 }
 
-
 class LoginState extends State<Login> {
   String error = "";
   final TextEditingController _usernameController = TextEditingController();
@@ -21,87 +20,78 @@ class LoginState extends State<Login> {
     return Scaffold(
       body: Center(
         child: Container(
-        margin: const EdgeInsets.only(top: 20.0),
-        padding: const EdgeInsets.all(10.0),
-        height: 360,
-        alignment: Alignment.topLeft,
-        child: Form(
+          margin: const EdgeInsets.only(top: 20.0),
+          padding: const EdgeInsets.all(10.0),
+          height: 360,
+          alignment: Alignment.topLeft,
+          child: Form(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 const Align(
-                alignment: Alignment.center,
-                child: Text(
-                  "Acme Airlines",
-                style: TextStyle(
-                  fontSize: 32.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            const Align(
-                alignment: Alignment.center,
-                child: Text(
-                  "Fazer Login",
-                style: TextStyle(
-                  fontSize: 24.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-
-            SizedBox(
-              child: TextFormField(
-                decoration: const InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(26.0),
-                      ),
+                  alignment: Alignment.center,
+                  child: Text(
+                    "Acme Airlines",
+                    style: TextStyle(
+                      fontSize: 32.0,
+                      fontWeight: FontWeight.bold,
                     ),
-                    labelText: "Username",
-                    hintText: "Digite seu usuário"),
-                controller: _usernameController,
-                validator: (value) {
-                  if (value == null || value == "") {
-                    return "Campo não pode estar vazio!";
-                  } else {
-                    return null;
-                  }
-                },
-              ),
-            ),
-            SizedBox(
-              child: TextFormField(
-                decoration: const InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(26.0),
-                      ),
+                  ),
+                ),
+                const Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    "Fazer Login",
+                    style: TextStyle(
+                      fontSize: 24.0,
+                      fontWeight: FontWeight.bold,
                     ),
-                    labelText: "Password",
-                    hintText: "*****"),
-                controller: _passwordController,
-                obscureText: true,
-                validator: (value) {
-                  if (value == null || value == "") {
-                    return "Campo não pode estar vazio!";
-                  } else {
-                    return null;
-                  }
-                },
-              ),
-            ),
-
-             Row( 
+                  ),
+                ),
+                SizedBox(
+                  child: TextFormField(
+                    decoration: const InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(26.0),
+                          ),
+                        ),
+                        labelText: "Username",
+                        hintText: "Digite seu usuário"),
+                    controller: _usernameController,
+                    validator: (value) {
+                      if (value == null || value == "") {
+                        return "Campo não pode estar vazio!";
+                      } else {
+                        return null;
+                      }
+                    },
+                  ),
+                ),
+                SizedBox(
+                  child: TextFormField(
+                    decoration: const InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(26.0),
+                          ),
+                        ),
+                        labelText: "Password",
+                        hintText: "*****"),
+                    controller: _passwordController,
+                    obscureText: true,
+                    validator: (value) {
+                      if (value == null || value == "") {
+                        return "Campo não pode estar vazio!";
+                      } else {
+                        return null;
+                      }
+                    },
+                  ),
+                ),
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    ElevatedButton(
-                      onPressed: () {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => const Cadastro()));
-                  },
-                    child: const Text("Cadastre-se"),
-                    ),
                     ElevatedButton(
                       onPressed: () {
                         if (_usernameController.text == "user" &&
@@ -113,7 +103,16 @@ class LoginState extends State<Login> {
                           });
                         }
                       },
-                      child: const Text("Entrar"),
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                      ),
+                      child: const Padding(
+                        padding: EdgeInsets.all(
+                            10.0), // Adjust the padding as needed
+                        child: Text("Entrar"),
+                      ),
                     ),
                   ],
                 ),

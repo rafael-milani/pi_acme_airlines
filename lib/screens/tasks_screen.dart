@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import '../blocs/bloc_exports.dart';
 import '../models/task.dart';
 
-class PendingTasksScreen extends StatelessWidget {
-  const PendingTasksScreen({Key? key}) : super(key: key);
+class TasksScreen extends StatelessWidget {
+  const TasksScreen({Key? key}) : super(key: key);
   static const id = 'principal_screen';
 
   @override

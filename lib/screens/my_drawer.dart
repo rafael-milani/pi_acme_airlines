@@ -1,6 +1,7 @@
 import 'package:acme_airlines_pi/blocs/bloc_exports.dart';
-import 'package:acme_airlines_pi/screens/pending_screen.dart';
-import 'package:acme_airlines_pi/screens/recycle_bin.dart';
+import 'package:acme_airlines_pi/screens/cadastro.dart';
+import 'package:acme_airlines_pi/screens/login.dart';
+import 'package:acme_airlines_pi/screens/tasks_screen.dart';
 import 'package:acme_airlines_pi/screens/tabs_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -18,37 +19,40 @@ class MyDrawer extends StatelessWidget {
             padding: EdgeInsets.symmetric(vertical: 14, horizontal: 20),
             color: Colors.white,
             child: Text(
-              'Task Drawer',
+              'Menu',
               style: Theme.of(context).textTheme.headline5,
             ),
           ),
-          BlocBuilder<TasksBloc, TasksState>(
-            builder: (context, state) {
-              return GestureDetector(
-                onTap: () => Navigator.of(context).pushNamed(TabsScreen.id),
+               GestureDetector(
+                onTap: () {},
                 child: ListTile(
-                  leading: Icon(Icons.folder_special),
-                  title: Text('Minhas Tasks'),
-                  trailing: Text('${state.pendingTasks.length}'),
+                  leading: Icon(Icons.person),
+                  title: Text('Meu Perfil'), 
                 ),
-              );
-            },
           ),
-           const Divider(),
-          BlocBuilder<TasksBloc, TasksState>(
-            builder: (context, state) {
-              return GestureDetector(
-                onTap: () => Navigator.of(context).pushNamed(RecycleBin.id),
+          const Divider(),
+          GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => const Cadastro()));
+                  },
                 child: ListTile(
-                  leading: Icon(Icons.delete),
-                  title: Text('Lixeira'),
-                  trailing: Text('${state.removedTasks.length}'),
+                  leading: Icon(Icons.person_add),
+                  title: Text('Cadastrar Usuario'), 
                 ),
-              );
-            },
           ),
-        ],
-      )),
+          const Divider(),
+          GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => const Login()));
+                  },
+                child: ListTile(
+                  leading: Icon(Icons.exit_to_app),
+                  title: Text('Sair'), 
+                ),
+          ),
+            ],
+          ),
+      ),
     );
   }
 }

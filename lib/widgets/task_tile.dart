@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:acme_airlines_pi/blocs/bloc_exports.dart';
 import 'package:acme_airlines_pi/models/task.dart';
+import 'package:intl/intl.dart';
 
 class TaskTile extends StatelessWidget {
   const TaskTile({
@@ -10,15 +11,60 @@ class TaskTile extends StatelessWidget {
 
   final Task task;
 
-  void _removeOrDeleteTask (BuildContext context, Task task){
-    task.isDeleted! 
-    ? context.read<TasksBloc>().add(DeleteTask(task: task))
-    : context.read<TasksBloc>().add(RemoveTask(task: task));
-  }
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
+    return Padding(
+      padding: const EdgeInsets.only(left: 10.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            child: Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        task.title,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 18,
+                          decoration: task.isDone! ? TextDecoration.lineThrough : null,
+                        ),
+                      ),
+                      Text(
+                        DateFormat()
+                        .add_yMMMd()
+                        .add_Hms()
+                        .format(DateTime.now()),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Row(
+            children: [
+              Checkbox(
+                value: task.isDone,
+                onChanged: (value) {
+                        context.read<TasksBloc>().add(UpdateTask(task: task));
+                      } 
+              ),
+              IconButton(onPressed: null, icon: Icon(Icons.edit))
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/*
+   ListTile(
       title: Text(
         task.title,
         overflow: TextOverflow.ellipsis,
@@ -34,5 +80,4 @@ class TaskTile extends StatelessWidget {
       ),
       onLongPress: ()=> _removeOrDeleteTask(context, task),
     );
-  }
-}
+*/

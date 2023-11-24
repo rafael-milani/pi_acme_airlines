@@ -7,27 +7,27 @@ import 'package:flutter/material.dart';
 import '../blocs/bloc_exports.dart';
 import '../models/task.dart';
 
-class FavoriteTasksScreen extends StatefulWidget {
-  const FavoriteTasksScreen({Key? key}) : super(key: key);
-  static const id = 'principal_screen';
+class StorageScreen extends StatefulWidget {
+  const StorageScreen({Key? key}) : super(key: key);
+  static const id = 'storage_screen';
   @override
-  State<FavoriteTasksScreen> createState() => _FavoriteTasksScreenState();
+  State<StorageScreen> createState() => _StorageScreenState();
 }
 
-class _FavoriteTasksScreenState extends State<FavoriteTasksScreen> {
+class _StorageScreenState extends State<StorageScreen> {
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TasksBloc, TasksState>(
       builder: (context, state) {
-        List<Task> tasksList = state.favoriteTasks;
+        List<Task> tasksList = state.completedTasks;
         return Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Center(
                 child: Chip(
                   label: Text(
-                    '${tasksList.length} Tasks',
+                    '${tasksList.length} Peças',
                   ),
                 ),
               ),

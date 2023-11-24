@@ -5,17 +5,15 @@ class Task extends Equatable{
   final String description;
   final String id;
   bool? isDone;
-  bool? isDeleted;
+
 
   Task({
     required this.title,
     required this.description,
     required this.id,
     this.isDone,
-    this.isDeleted,
   }){
     isDone = isDone ?? false;
-    isDeleted = isDeleted ?? false;
   }
 
   Task copyWith({
@@ -24,7 +22,6 @@ class Task extends Equatable{
     String? description,
     String? id,
     bool? isDone, 
-    bool? isDeleted,
 
   }){
     return Task(
@@ -32,7 +29,6 @@ class Task extends Equatable{
       description: title ?? this.description,
       id: id ?? this.id,
       isDone: isDone ?? this.isDone,
-      isDeleted: isDeleted ?? this.isDeleted,
     );
   }
 
@@ -42,7 +38,6 @@ class Task extends Equatable{
       'description': description,
       'id':'id',
       'isDone': isDone,
-      'isDeleted': isDeleted,
     };
   }
 
@@ -53,7 +48,6 @@ class Task extends Equatable{
       description: map['description'] ?? '',
       id: map['id'] ?? '',
       isDone: map['isDone'],
-      isDeleted: map ['isDeleted'],  
 
     );
   }
@@ -64,7 +58,6 @@ class Task extends Equatable{
     description,
     id, 
     isDone, 
-    isDeleted,
   ];
 
 }

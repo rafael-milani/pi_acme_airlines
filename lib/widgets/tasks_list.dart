@@ -24,7 +24,7 @@ class TasksList extends StatelessWidget {
               body: ListTile(
                 title: SelectableText.rich(TextSpan(children: [
                     const TextSpan(
-                      text: 'Texto\n ', 
+                      text: 'Task\n ', 
                       style: TextStyle(
                         fontWeight: FontWeight.bold
                         ),

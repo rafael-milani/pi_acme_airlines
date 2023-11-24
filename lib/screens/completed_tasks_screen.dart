@@ -1,5 +1,3 @@
-import 'package:acme_airlines_pi/screens/add_task_screen.dart';
-import 'package:acme_airlines_pi/screens/my_drawer.dart';
 import 'package:acme_airlines_pi/widgets/tasks_list.dart';
 import 'package:flutter/material.dart';
 
@@ -8,7 +6,7 @@ import '../models/task.dart';
 
 class CompletedTasksScreen extends StatefulWidget {
   const CompletedTasksScreen({Key? key}) : super(key: key);
-  static const id = 'principal_screen';
+  static const id = 'completed_screen';
   @override
   State<CompletedTasksScreen> createState() => _CompletedTasksScreenState();
 }

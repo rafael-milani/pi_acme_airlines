@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'package:acme_airlines_pi/screens/login.dart';
-import 'package:acme_airlines_pi/screens/pending_screen.dart';
+import 'package:acme_airlines_pi/screens/tasks_screen.dart';
 
 import 'blocs/bloc_exports.dart';
 import 'screens/add_task_screen.dart';

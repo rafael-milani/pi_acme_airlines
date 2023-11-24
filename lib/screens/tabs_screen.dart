@@ -2,7 +2,7 @@ import 'package:acme_airlines_pi/screens/add_task_screen.dart';
 import 'package:acme_airlines_pi/screens/completed_tasks_screen.dart';
 import 'package:acme_airlines_pi/screens/favorite_tasks_screen.dart';
 import 'package:acme_airlines_pi/screens/my_drawer.dart';
-import 'package:acme_airlines_pi/screens/pending_screen.dart';
+import 'package:acme_airlines_pi/screens/tasks_screen.dart';
 import 'package:flutter/material.dart';
 
 class TabsScreen extends StatefulWidget {
@@ -15,9 +15,9 @@ class TabsScreen extends StatefulWidget {
 
 class _TabsScreenState extends State<TabsScreen> {
   final List<Map<String, dynamic>> _pageDetails = [
-    {'pageName': PendingTasksScreen(), 'title': 'Tarefas Pendentes'},
-    {'pageName': CompletedTasksScreen(), 'title': 'Tarefas Concluidas'},
-    {'pageName': FavoriteTasksScreen(), 'title': 'Tarefas Favoritas'},
+    {'pageName': TasksScreen(), 'title': 'Tasks'},
+    {'pageName': CompletedTasksScreen(), 'title': 'Historico'},
+    {'pageName': StorageScreen(), 'title': 'Estoque'},
   ];
 
   var _selectedPageIndex = 0;
@@ -62,16 +62,16 @@ class _TabsScreenState extends State<TabsScreen> {
         },
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.incomplete_circle_sharp),
-            label: 'Tasks Pendentes'
+            icon: Icon(Icons.task),
+            label: 'Tasks'
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.done),
-            label: 'Tasks Concluidas'
+            icon: Icon(Icons.manage_search),
+            label: 'Historico'
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.favorite),
-            label: 'Tasks Favoritas'
+            icon: Icon(Icons.storage),
+            label: 'Estoque'
           ),
         ],
       ),

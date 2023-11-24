@@ -3,8 +3,8 @@ import 'package:acme_airlines_pi/models/task.dart';
 import 'package:acme_airlines_pi/services/guid_gen.dart';
 import 'package:flutter/material.dart';
 
-class AddTaskScreen extends StatelessWidget {
-  const AddTaskScreen({
+class EditTaskScreen extends StatelessWidget {
+  const EditTaskScreen({
     super.key,
   });
 
@@ -20,7 +20,7 @@ class AddTaskScreen extends StatelessWidget {
         child: Column(
           children: [
             const Text(
-              'Adicionar Task',
+              'Editar Task',
               style: TextStyle(fontSize: 24),
             ),
             const SizedBox(
@@ -60,12 +60,11 @@ class AddTaskScreen extends StatelessWidget {
                     title: titleController.text,
                     description: descriptionController.text,
                     id: GUIDGen.generate(),
-                    //date: DateTime.now().toString()
                     );
                     context.read<TasksBloc>().add(AddTask(task: task));
                     Navigator.pop(context);
                   },
-                  child: const Text('Adicionar'),
+                  child: const Text('Editar'),
                 )
               ],
             )
