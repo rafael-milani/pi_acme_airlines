@@ -48,9 +48,9 @@ class LoginState extends State<Login> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
-                  Icons.airplanemode_active,
-                  size: 150,
+                Image.asset(
+                  'images/Logo.png',
+                  width: 300,
                 ),
                 SizedBox(
                   height: 30,
