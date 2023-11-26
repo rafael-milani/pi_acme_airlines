@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'dart:io';
-import 'package:acme_airlines_pi/screens/cadastro.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -21,7 +19,7 @@ class LoginState extends State<Login> {
   void authenticate(String email, String password) async {
     if(email.length == 0 || password.length == 0){
       return setState(() {
-        error = "Email e/ou senha devem ser preenchidos.";
+        erro = "Email e/ou senha devem ser preenchidos.";
       });
     }
 
@@ -36,7 +34,7 @@ class LoginState extends State<Login> {
     final responseBody = jsonDecode(response.body);
     final authenticated = responseBody['authenticated'];
 
-    authenticated ? Navigator.pushNamed(context, "principal/") : setState(() { error = "Usuário e/ou senha inválidos"; });
+    authenticated ? Navigator.pushNamed(context, "principal/") : setState(() { erro = "Usuário e/ou senha inválidos"; });
   }
 
   @override
@@ -48,9 +46,9 @@ class LoginState extends State<Login> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
-                  Icons.airplanemode_active,
-                  size: 150,
+                Image.asset(
+                  'images/Logo.png',
+                  width: 300,
                 ),
                 SizedBox(
                   height: 30,
