@@ -3,6 +3,7 @@ import 'package:acme_airlines_pi/screens/completed_tasks_screen.dart';
 import 'package:acme_airlines_pi/screens/parts.dart';
 import 'package:acme_airlines_pi/screens/my_drawer.dart';
 import 'package:acme_airlines_pi/screens/tasks_screen.dart';
+import 'package:acme_airlines_pi/screens/add_part_screen.dart';
 import 'package:flutter/material.dart';
 
 class TabsScreen extends StatefulWidget {
@@ -35,6 +36,19 @@ class _TabsScreenState extends State<TabsScreen> {
             ));
   }
 
+  void _addPart(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) => SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          child: const AddPartScreen(),
+        )
+      )
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,9 +60,9 @@ class _TabsScreenState extends State<TabsScreen> {
       ),
       drawer: const MyDrawer(),
       body: _pageDetails[_selectedPageIndex]['pageName'],
-      floatingActionButton: _selectedPageIndex == 0 
+      floatingActionButton: _selectedPageIndex == 0 || _selectedPageIndex == 2
       ? FloatingActionButton(
-        onPressed: () => _addTask(context),
+        onPressed: () => _selectedPageIndex == 0 ? _addTask(context) : _addPart(context),
         tooltip: 'Adicionar task',
         child: const Icon(Icons.add),
       )
