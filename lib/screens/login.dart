@@ -21,7 +21,7 @@ class LoginState extends State<Login> {
   void authenticate(String email, String password) async {
     if(email.length == 0 || password.length == 0){
       return setState(() {
-        error = "Email e/ou senha devem ser preenchidos.";
+        erro = "Email e/ou senha devem ser preenchidos.";
       });
     }
 
@@ -36,7 +36,7 @@ class LoginState extends State<Login> {
     final responseBody = jsonDecode(response.body);
     final authenticated = responseBody['authenticated'];
 
-    authenticated ? Navigator.pushNamed(context, "principal/") : setState(() { error = "Usuário e/ou senha inválidos"; });
+    authenticated ? Navigator.pushNamed(context, "principal/") : setState(() { erro = "Usuário e/ou senha inválidos"; });
   }
 
   @override
