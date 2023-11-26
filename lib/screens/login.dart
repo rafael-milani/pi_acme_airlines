@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'dart:io';
-import 'package:acme_airlines_pi/screens/cadastro.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
