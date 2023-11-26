@@ -1,6 +1,6 @@
 import 'package:acme_airlines_pi/screens/add_task_screen.dart';
 import 'package:acme_airlines_pi/screens/completed_tasks_screen.dart';
-import 'package:acme_airlines_pi/screens/favorite_tasks_screen.dart';
+import 'package:acme_airlines_pi/screens/parts.dart';
 import 'package:acme_airlines_pi/screens/my_drawer.dart';
 import 'package:acme_airlines_pi/screens/tasks_screen.dart';
 import 'package:flutter/material.dart';
