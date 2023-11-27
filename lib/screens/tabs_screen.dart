@@ -4,6 +4,7 @@ import 'package:acme_airlines_pi/screens/parts.dart';
 import 'package:acme_airlines_pi/screens/my_drawer.dart';
 import 'package:acme_airlines_pi/screens/tasks_screen.dart';
 import 'package:acme_airlines_pi/screens/add_part_screen.dart';
+import 'package:acme_airlines_pi/screens/task_details.dart';
 import 'package:flutter/material.dart';
 
 class TabsScreen extends StatefulWidget {
@@ -16,8 +17,8 @@ class TabsScreen extends StatefulWidget {
 
 class _TabsScreenState extends State<TabsScreen> {
   final List<Map<String, dynamic>> _pageDetails = [
-    {'pageName': TasksScreen(), 'title': 'Tasks'},
-    {'pageName': CompletedTasksScreen(), 'title': 'Historico'},
+    {'pageName': TasksScreen(), 'title': 'Manutenções Pendentes'},
+    {'pageName': CompletedTasksScreen(), 'title': 'Manutenções Concluídas'},
     {'pageName': StorageScreen(), 'title': 'Estoque'},
   ];
 
