@@ -34,7 +34,20 @@ class LoginState extends State<Login> {
     final responseBody = jsonDecode(response.body);
     final authenticated = responseBody['authenticated'];
 
-    authenticated ? Navigator.pushNamed(context, "principal/") : setState(() { erro = "Usuário e/ou senha inválidos"; });
+    authenticated 
+    ? Navigator.pushNamed(context, "principal/") 
+    : setState(() { erro = "Usuário e/ou senha inválidos"; });
+    
+    /*
+     if (authenticated) {
+      Navigator.pushNamed(context, "principal/",
+          arguments: {'email': _emailController.text});
+    } else {
+      setState(() {
+        erro = "Usuário e/ou senha inválidos";
+      });
+    }
+    */
   }
 
   @override
