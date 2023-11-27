@@ -15,7 +15,7 @@ class TaskTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 10.0),
+      padding: const EdgeInsets.only(left: 15.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -54,7 +54,6 @@ class TaskTile extends StatelessWidget {
                         context.read<TasksBloc>().add(UpdateTask(task: task));
                       } 
               ),
-              IconButton(onPressed: null, icon: Icon(Icons.edit))
             ],
           ),
         ],

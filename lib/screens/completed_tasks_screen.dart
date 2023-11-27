@@ -12,13 +12,13 @@ class CompletedTasksScreen extends StatefulWidget {
 }
 
 class _CompletedTasksScreenState extends State<CompletedTasksScreen> {
-
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<TasksBloc, TasksState>(
-      builder: (context, state) {
-        List<Task> tasksList = state.completedTasks;
-        return Column(
+    return Scaffold(
+      body: BlocBuilder<TasksBloc, TasksState>(
+        builder: (context, state) {
+          List<Task> tasksList = state.completedTasks;
+          return Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Center(
@@ -31,7 +31,8 @@ class _CompletedTasksScreenState extends State<CompletedTasksScreen> {
               TasksList(taskList: tasksList)
             ],
           );
-      },
+        },
+      ),
     );
   }
 }
