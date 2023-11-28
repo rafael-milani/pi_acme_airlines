@@ -49,7 +49,7 @@ class _TasksScreenState extends State<TasksScreen> {
           )
         )
       )
-    );
+    ).then((_) => loadTasks());
   }
 
   @override

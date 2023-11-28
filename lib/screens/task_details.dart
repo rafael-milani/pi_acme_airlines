@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:acme_airlines_pi/widgets/tasks_list.dart';
+import 'package:acme_airlines_pi/screens/add_part_request_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../blocs/bloc_exports.dart';
@@ -16,7 +17,7 @@ class TaskDetailsScreen extends StatefulWidget {
   }
 }
 
-class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
+class _TaskDetailsScreenState extends State<TaskDetailsScreen>{
   var taskDetails;
 
   @override
@@ -47,8 +48,18 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
     print(taskDetails);
   }
 
-
-  
+  void addPartRequest(BuildContext context, maintenance_id) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) => SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          child: AddPartRequestScreen(maintenance_id: maintenance_id),
+        )
+      )
+    ).then((_) => loadTaskDetails());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -137,33 +148,51 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
                     child: Card(
                       child: Padding(
                         padding: const EdgeInsets.all(6),
-                        child: Container(
+                        child: Row(
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text('Model ID', style: TextStyle(color: Colors.grey[800], fontSize: 10)),
+                                        Text(part['model_id'].toString(), style: const TextStyle(fontSize: 18))
+                                      ],
+                                    ),
+                                    const SizedBox(width: 10),
+                                    Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text('Unit ID', style: TextStyle(color: Colors.grey[800], fontSize: 10)),
+                                        Text(part['id'], style: const TextStyle(fontSize: 18))
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ]
+                            )
+                          ],
+                        )
+                      )
+                    )
+                  ),
+                  SizedBox(
+                    width: 350,
+                    height: 60,
+                    child: GestureDetector(
+                      onTap: () => addPartRequest(context, taskDetails['id']),
+                      child: Card(
+                        child: Padding(
+                          padding: const EdgeInsets.all(6),
                           child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text('Model ID', style: TextStyle(color: Colors.grey[800], fontSize: 10)),
-                                          Text(part['model_id'].toString(), style: const TextStyle(fontSize: 18))
-                                        ],
-                                      ),
-                                      Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text('Unit ID', style: TextStyle(color: Colors.grey[800], fontSize: 10)),
-                                          Text(part['id'], style: const TextStyle(fontSize: 18))
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                ]
-                              )
-                            ],
+                              Text('+', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 28, color: Colors.green[800]))
+                            ]
                           )
                         )
                       )
@@ -188,33 +217,51 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
                     child: Card(
                       child: Padding(
                         padding: const EdgeInsets.all(6),
-                        child: Container(
+                        child: Row(
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text('Model ID', style: TextStyle(color: Colors.grey[800], fontSize: 10)),
+                                        Text(part['model_id'].toString(), style: const TextStyle(fontSize: 18))
+                                      ],
+                                    ),
+                                    const SizedBox(width: 10),
+                                    Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text('Unit ID', style: TextStyle(color: Colors.grey[800], fontSize: 10)),
+                                        Text(part['id'], style: const TextStyle(fontSize: 18))
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ]
+                            )
+                          ],
+                        )
+                      )
+                    )
+                  ),
+                  SizedBox(
+                    width: 350,
+                    height: 60,
+                    child: GestureDetector(
+                      onTap: () => print('a'),
+                      child: Card(
+                        child: Padding(
+                          padding: const EdgeInsets.all(6),
                           child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text('Model ID', style: TextStyle(color: Colors.grey[800], fontSize: 10)),
-                                          Text(part['model_id'].toString(), style: const TextStyle(fontSize: 18))
-                                        ],
-                                      ),
-                                      Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text('Unit ID', style: TextStyle(color: Colors.grey[800], fontSize: 10)),
-                                          Text(part['id'], style: const TextStyle(fontSize: 18))
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                ]
-                              )
-                            ],
+                              Text('+', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 28, color: Colors.red[800]))
+                            ]
                           )
                         )
                       )
@@ -239,35 +286,34 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
                     child: Card(
                       child: Padding(
                         padding: const EdgeInsets.all(6),
-                        child: Container(
-                          child: Row(
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text('Email', style: TextStyle(color: Colors.grey[800], fontSize: 10)),
-                                          Text(worker['email'], style: const TextStyle(fontSize: 18))
-                                        ],
-                                      ),
-                                      Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text('Name', style: TextStyle(color: Colors.grey[800], fontSize: 10)),
-                                          Text("${worker['name']} ${worker['surname']}", style: const TextStyle(fontSize: 18))
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                ]
-                              )
-                            ],
-                          )
+                        child: Row(
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text('Email', style: TextStyle(color: Colors.grey[800], fontSize: 10)),
+                                        Text(worker['email'], style: const TextStyle(fontSize: 18))
+                                      ],
+                                    ),
+                                    const SizedBox(width: 10),
+                                    Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text('Name', style: TextStyle(color: Colors.grey[800], fontSize: 10)),
+                                        Text("${worker['name']} ${worker['surname']}", style: const TextStyle(fontSize: 18))
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ]
+                            )
+                          ],
                         )
                       )
                     )
@@ -288,19 +334,17 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
                 children: <Widget>[
                   for(var item in taskDetails['checklist']) SizedBox(
                     width: 350,
-                    child: Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(item['label'], style: const TextStyle(fontSize: 16)),
-                          Checkbox(
-                            value: false,
-                            onChanged: (newValue) {
-                              item['done'] = newValue;
-                            }
-                          )
-                        ],
-                      )
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(item['label'], style: const TextStyle(fontSize: 16)),
+                        Checkbox(
+                          value: false,
+                          onChanged: (newValue) {
+                            item['done'] = newValue;
+                          }
+                        )
+                      ],
                     )
                   )
                 ]

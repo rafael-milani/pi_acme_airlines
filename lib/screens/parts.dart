@@ -9,10 +9,10 @@ class StorageScreen extends StatefulWidget {
   const StorageScreen({Key? key}) : super(key: key);
   static const id = 'storage_screen';
   @override
-  State<StorageScreen> createState() => _StorageScreenState();
+  State<StorageScreen> createState() => StorageScreenState();
 }
 
-class _StorageScreenState extends State<StorageScreen> {
+class StorageScreenState extends State<StorageScreen> {
   var partModels = [];
   var partUnits = [];
   bool loadingParts = false;

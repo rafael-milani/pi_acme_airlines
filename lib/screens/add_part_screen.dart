@@ -27,7 +27,7 @@ class AddPartScreenState extends State<AddPartScreen> {
     final responseStatus = response.statusCode;
     print(response.body);
 
-    responseStatus == 200 ? Navigator.pop(context) : ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Entrada inválida - Insira um model_id existente.')));;
+    responseStatus == 200 ? Navigator.pop(context) : ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Entrada inválida - Insira um model_id existente.')));
   }
 
   @override
