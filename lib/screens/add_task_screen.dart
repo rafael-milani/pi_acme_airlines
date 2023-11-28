@@ -5,6 +5,7 @@ import 'package:acme_airlines_pi/models/task.dart';
 import 'package:acme_airlines_pi/services/guid_gen.dart';
 import 'package:acme_airlines_pi/screens/parts.dart';
 import 'package:flutter/material.dart';
+import 'package:acme_airlines_pi/globals.dart' as globals;
 
 class AddTaskScreen extends StatefulWidget {
   const AddTaskScreen({super.key});
@@ -28,7 +29,7 @@ class AddTaskScreenState extends State<AddTaskScreen> {
       'title': title,
       'description': description,
       'instructions': instructions,
-      'requester': 'a'
+      'requester': globals.userEmail
     };
     final body = jsonEncode(jsonBody);
 

@@ -1,4 +1,7 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:acme_airlines_pi/globals.dart' as globals;
 
 class MyProfile extends StatefulWidget {
   const MyProfile({super.key});
@@ -8,6 +11,30 @@ class MyProfile extends StatefulWidget {
 }
 
 class _MyProfileState extends State<MyProfile> {
+  var userInfo = [];
+  
+  @override
+  void initState() {
+    loadUser();
+
+    super.initState();
+  }
+
+  void loadUser() async {
+    final url = Uri.parse('https://skystop.onrender.com/user');
+    final jsonBody = {
+      'email': globals.userEmail,
+    };
+    final body = jsonEncode(jsonBody);
+    final response = await http.post(url, headers: {"Content-Type": "application/json"}, body: body);
+
+    setState((){
+      userInfo = jsonDecode(response.body);
+    });
+    
+    print(userInfo);
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -62,7 +89,7 @@ class _MyProfileState extends State<MyProfile> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text("Nome",
+                          Text("Nome Completo",
                           style: TextStyle(fontSize: 20, color: Colors.grey),
                           ),
                           Icon(Icons.person, color: Colors.grey)
@@ -70,26 +97,9 @@ class _MyProfileState extends State<MyProfile> {
                         ],
                       ),
                       Row(
-                        children: [
-                          Text("Fulano",
-                          style: TextStyle(fontSize: 20),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text("Sobrenome",
-                          style: TextStyle(fontSize: 20, color: Colors.grey),
-                          ),
-                          Icon(Icons.group, color: Colors.grey)
-                          
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Text("Silva Santos",
-                          style: TextStyle(fontSize: 20),
+                        children: <Widget>[
+                          for(var user in userInfo) Text("${user['name']} ${user['surname']}",
+                            style: TextStyle(fontSize: 20),
                           ),
                         ],
                       ),
@@ -104,10 +114,8 @@ class _MyProfileState extends State<MyProfile> {
                       ),
                       Row(
                         children: [
-                        Expanded(
-                            //child: Text('E-mail: ${args['email']}',
-                            child: Text(
-                              'fulano@gmail.com',
+                          for(var user in userInfo) Expanded(
+                            child: Text(user['email'].toString(),
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(fontSize: 20),
                             ),

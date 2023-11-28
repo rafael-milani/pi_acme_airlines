@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:acme_airlines_pi/screens/add_part_removal_screen.dart';
+import 'package:acme_airlines_pi/screens/request_worker_screen.dart';
 import 'package:acme_airlines_pi/widgets/tasks_list.dart';
 import 'package:acme_airlines_pi/screens/add_part_request_screen.dart';
 import 'package:flutter/material.dart';
@@ -56,6 +58,32 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen>{
         child: Container(
           padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
           child: AddPartRequestScreen(maintenance_id: maintenance_id),
+        )
+      )
+    ).then((_) => loadTaskDetails());
+  }
+
+  void addPartRemoval(BuildContext context, maintenance_id) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) => SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          child: AddPartRemovalScreen(maintenance_id: maintenance_id),
+        )
+      )
+    ).then((_) => loadTaskDetails());
+  }
+
+  void requestWorker(BuildContext context, maintenance_id) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) => SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          child: RequestWorkerScreen(maintenance_id: maintenance_id),
         )
       )
     ).then((_) => loadTaskDetails());
@@ -252,7 +280,7 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen>{
                     width: 350,
                     height: 60,
                     child: GestureDetector(
-                      onTap: () => print('a'),
+                      onTap: () => addPartRemoval(context, taskDetails['id']),
                       child: Card(
                         child: Padding(
                           padding: const EdgeInsets.all(6),
@@ -314,6 +342,25 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen>{
                               ]
                             )
                           ],
+                        )
+                      )
+                    )
+                  ),
+                  SizedBox(
+                    width: 350,
+                    height: 60,
+                    child: GestureDetector(
+                      onTap: () => requestWorker(context, taskDetails['id']),
+                      child: Card(
+                        child: Padding(
+                          padding: const EdgeInsets.all(6),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text('+', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 28, color: Colors.blue[800]))
+                            ]
+                          )
                         )
                       )
                     )
