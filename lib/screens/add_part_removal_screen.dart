@@ -2,24 +2,36 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-class AddPartScreen extends StatefulWidget {
-  const AddPartScreen({super.key});
+class AddPartRemovalScreen extends StatefulWidget {
+  final maintenance_id;
+
+  const AddPartRemovalScreen({super.key, this.maintenance_id});
 
   @override
-  State<AddPartScreen> createState() {
-    return AddPartScreenState();
+  State<AddPartRemovalScreen> createState() {
+    return AddPartRemovalScreenState();
   }
 }
 
-class AddPartScreenState extends State<AddPartScreen> {
+class AddPartRemovalScreenState extends State<AddPartRemovalScreen> {
+  var maintenance_id;
+
   final TextEditingController modelController = TextEditingController();
   final TextEditingController unitController = TextEditingController();
 
-  void createPart(String model_id, String unit_id) async {
-    final url = Uri.parse('https://skystop.onrender.com/parts/units');
+  @override
+  void initState(){
+    maintenance_id = widget.maintenance_id;
+
+    super.initState();
+  }
+
+  void createPartRemoval(String model_id, String unit_id) async {
+    final url = Uri.parse('https://skystop.onrender.com/maintenance/remove_part');
     final jsonBody = {
-      'model_id': model_id,
-      'id': unit_id
+      'maintenance': maintenance_id,
+      'part_model': model_id,
+      'part_unit': unit_id
     };
     final body = jsonEncode(jsonBody);
 
@@ -27,12 +39,11 @@ class AddPartScreenState extends State<AddPartScreen> {
     final responseStatus = response.statusCode;
     print(response.body);
 
-    responseStatus == 200 ? Navigator.pop(context) : ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Entrada inválida - Insira um model_id existente.')));
+    responseStatus == 200 ? Navigator.pop(context) : ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Entrada inválida - Insira um model_id válido.')));;
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Container(
       padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
       child: Container(
@@ -40,7 +51,7 @@ class AddPartScreenState extends State<AddPartScreen> {
         child: Column(
           children: [
             const Text(
-              'Adicionar Peça',
+              'Remover Peça',
               style: TextStyle(fontSize: 24),
             ),
             const SizedBox(
@@ -74,7 +85,7 @@ class AddPartScreenState extends State<AddPartScreen> {
                   child: const Text('Cancelar'),
                 ),
                 ElevatedButton(
-                  onPressed: () => createPart(modelController.text, unitController.text),
+                  onPressed: () => createPartRemoval(modelController.text, unitController.text),
                   child: const Text('Criar'),
                 )
               ],

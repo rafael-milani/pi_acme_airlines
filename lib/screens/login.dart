@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:acme_airlines_pi/globals.dart' as globals;
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -34,20 +35,9 @@ class LoginState extends State<Login> {
     final responseBody = jsonDecode(response.body);
     final authenticated = responseBody['authenticated'];
 
-    authenticated 
-    ? Navigator.pushNamed(context, "principal/") 
-    : setState(() { erro = "Usuário e/ou senha inválidos"; });
-    
-    /*
-     if (authenticated) {
-      Navigator.pushNamed(context, "principal/",
-          arguments: {'email': _emailController.text});
-    } else {
-      setState(() {
-        erro = "Usuário e/ou senha inválidos";
-      });
-    }
-    */
+    globals.userEmail = email;
+
+    authenticated ? Navigator.pushNamed(context, "principal/") : setState(() { erro = "Usuário e/ou senha inválidos"; });
   }
 
   @override

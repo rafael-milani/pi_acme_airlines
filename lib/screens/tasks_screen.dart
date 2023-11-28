@@ -49,7 +49,7 @@ class _TasksScreenState extends State<TasksScreen> {
           )
         )
       )
-    );
+    ).then((_) => loadTasks());
   }
 
   @override
@@ -88,7 +88,7 @@ class _TasksScreenState extends State<TasksScreen> {
                                   Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Text('Title', style: TextStyle(color: Colors.grey[800], fontSize: 10)),
+                                      Text('Título', style: TextStyle(color: Colors.grey[800], fontSize: 10)),
                                       Text(task['motive_title'].toString(), style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16))
                                     ],
                                   )
@@ -109,7 +109,7 @@ class _TasksScreenState extends State<TasksScreen> {
                                   Column(
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
-                                      Text('Requester', style: TextStyle(color: Colors.grey[800], fontSize: 10)),
+                                      Text('Requisitor', style: TextStyle(color: Colors.grey[800], fontSize: 10)),
                                       Text(task['requester_email'].toString(), style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14))
                                     ],
                                   )

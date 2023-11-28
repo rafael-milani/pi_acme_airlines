@@ -2,24 +2,34 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-class AddPartScreen extends StatefulWidget {
-  const AddPartScreen({super.key});
+class AddChecklistItemScreen extends StatefulWidget {
+  final maintenance_id;
+
+  const AddChecklistItemScreen({super.key, this.maintenance_id});
 
   @override
-  State<AddPartScreen> createState() {
-    return AddPartScreenState();
+  State<AddChecklistItemScreen> createState() {
+    return AddChecklistItemScreenState();
   }
 }
 
-class AddPartScreenState extends State<AddPartScreen> {
-  final TextEditingController modelController = TextEditingController();
-  final TextEditingController unitController = TextEditingController();
+class AddChecklistItemScreenState extends State<AddChecklistItemScreen> {
+  var maintenance_id;
 
-  void createPart(String model_id, String unit_id) async {
-    final url = Uri.parse('https://skystop.onrender.com/parts/units');
+  final TextEditingController labelController = TextEditingController();
+
+  @override
+  void initState(){
+    maintenance_id = widget.maintenance_id;
+
+    super.initState();
+  }
+
+  void addChecklistItem(String label) async {
+    final url = Uri.parse('https://skystop.onrender.com/maintenance/create_checklist_item');
     final jsonBody = {
-      'model_id': model_id,
-      'id': unit_id
+      'maintenance': maintenance_id,
+      'label': label
     };
     final body = jsonEncode(jsonBody);
 
@@ -27,12 +37,11 @@ class AddPartScreenState extends State<AddPartScreen> {
     final responseStatus = response.statusCode;
     print(response.body);
 
-    responseStatus == 200 ? Navigator.pop(context) : ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Entrada inválida - Insira um model_id existente.')));
+    responseStatus == 200 ? Navigator.pop(context) : ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Ocorreu um erro durante a criação do item.')));;
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Container(
       padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
       child: Container(
@@ -40,7 +49,7 @@ class AddPartScreenState extends State<AddPartScreen> {
         child: Column(
           children: [
             const Text(
-              'Adicionar Peça',
+              'Adicionar Item para a Checklist',
               style: TextStyle(fontSize: 24),
             ),
             const SizedBox(
@@ -50,20 +59,12 @@ class AddPartScreenState extends State<AddPartScreen> {
               padding: const EdgeInsets.only(top:10, bottom: 10),
               child: TextField(
                 autofocus: true,
-                controller: modelController,
+                controller: labelController,
                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
-                  label: Text('Model ID'),
+                  label: Text('Label'),
                   border: OutlineInputBorder(),
                 ),
-              ),
-            ),
-            TextField(
-              autofocus: true,
-              controller: unitController,
-              decoration: const InputDecoration(
-                label: Text('Unit ID'),
-                border: OutlineInputBorder(),
               ),
             ),
             Row(
@@ -74,8 +75,8 @@ class AddPartScreenState extends State<AddPartScreen> {
                   child: const Text('Cancelar'),
                 ),
                 ElevatedButton(
-                  onPressed: () => createPart(modelController.text, unitController.text),
-                  child: const Text('Criar'),
+                  onPressed: () => addChecklistItem(labelController.text),
+                  child: const Text('Adicionar'),
                 )
               ],
             )

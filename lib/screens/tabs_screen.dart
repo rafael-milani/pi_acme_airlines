@@ -78,11 +78,11 @@ class _TabsScreenState extends State<TabsScreen> {
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.task),
-            label: 'Tasks'
+            label: 'Manutenções'
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.manage_search),
-            label: 'Historico'
+            label: 'Histórico'
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.storage),

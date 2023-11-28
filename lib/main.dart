@@ -2,10 +2,9 @@ import 'package:acme_airlines_pi/screens/tabs_screen.dart';
 import 'package:acme_airlines_pi/services/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
-
+import 'package:acme_airlines_pi/globals.dart' as globals;
 import 'package:acme_airlines_pi/screens/login.dart';
 import 'package:acme_airlines_pi/screens/tasks_screen.dart';
-
 import 'blocs/bloc_exports.dart';
 import 'screens/add_task_screen.dart';
 

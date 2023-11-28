@@ -3,7 +3,9 @@ import 'package:http/http.dart' as http;
 import 'package:acme_airlines_pi/blocs/bloc_exports.dart';
 import 'package:acme_airlines_pi/models/task.dart';
 import 'package:acme_airlines_pi/services/guid_gen.dart';
+import 'package:acme_airlines_pi/screens/parts.dart';
 import 'package:flutter/material.dart';
+import 'package:acme_airlines_pi/globals.dart' as globals;
 
 class AddTaskScreen extends StatefulWidget {
   const AddTaskScreen({super.key});
@@ -27,7 +29,7 @@ class AddTaskScreenState extends State<AddTaskScreen> {
       'title': title,
       'description': description,
       'instructions': instructions,
-      'requester': 'a'
+      'requester': globals.userEmail
     };
     final body = jsonEncode(jsonBody);
 
@@ -70,7 +72,7 @@ class AddTaskScreenState extends State<AddTaskScreen> {
               autofocus: true,
               controller: titleController,
               decoration: const InputDecoration(
-                label: Text('Title'),
+                label: Text('Título'),
                 border: OutlineInputBorder(),
               ),
             ),
@@ -81,7 +83,7 @@ class AddTaskScreenState extends State<AddTaskScreen> {
               minLines: 2,
               maxLines: 4,
               decoration: const InputDecoration(
-                label: Text('Description'),
+                label: Text('Descrição'),
                 border: OutlineInputBorder(),
               ),
             ),
@@ -92,7 +94,7 @@ class AddTaskScreenState extends State<AddTaskScreen> {
               minLines: 3,
               maxLines: 10,
               decoration: const InputDecoration(
-                label: Text('Instructions'),
+                label: Text('Instruções'),
                 border: OutlineInputBorder(),
               ),
             ),
