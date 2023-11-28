@@ -72,7 +72,7 @@ class AddTaskScreenState extends State<AddTaskScreen> {
               autofocus: true,
               controller: titleController,
               decoration: const InputDecoration(
-                label: Text('Title'),
+                label: Text('Título'),
                 border: OutlineInputBorder(),
               ),
             ),
@@ -83,7 +83,7 @@ class AddTaskScreenState extends State<AddTaskScreen> {
               minLines: 2,
               maxLines: 4,
               decoration: const InputDecoration(
-                label: Text('Description'),
+                label: Text('Descrição'),
                 border: OutlineInputBorder(),
               ),
             ),
@@ -94,7 +94,7 @@ class AddTaskScreenState extends State<AddTaskScreen> {
               minLines: 3,
               maxLines: 10,
               decoration: const InputDecoration(
-                label: Text('Instructions'),
+                label: Text('Instruções'),
                 border: OutlineInputBorder(),
               ),
             ),

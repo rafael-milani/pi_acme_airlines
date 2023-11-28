@@ -87,7 +87,6 @@ class StorageScreenState extends State<StorageScreen> {
                                   fontSize: 16,
                                 ))
                               )
-                              
                             ]
                           )
                         ],

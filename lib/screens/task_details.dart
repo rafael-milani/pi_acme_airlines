@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:acme_airlines_pi/screens/add_checklist_item_screen.dart';
 import 'package:acme_airlines_pi/screens/add_part_removal_screen.dart';
 import 'package:acme_airlines_pi/screens/request_worker_screen.dart';
 import 'package:acme_airlines_pi/widgets/tasks_list.dart';
@@ -89,17 +90,88 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen>{
     ).then((_) => loadTaskDetails());
   }
 
+  void addChecklistItem(BuildContext context, maintenance_id) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) => SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          child: AddChecklistItemScreen(maintenance_id: maintenance_id),
+        )
+      )
+    ).then((_) => loadTaskDetails());
+  }
+
+  void setChecklistItem(BuildContext context, boolValue, item_id) async {
+    var value;
+
+    boolValue ? value = 1 : value = 0;
+
+    final url = Uri.parse('https://skystop.onrender.com/maintenance/change_checklist_item');
+    final jsonBody = {
+      'value': value,
+      'item': item_id
+    };
+    final body = jsonEncode(jsonBody);
+    final response = await http.post(url, headers: {"Content-Type": "application/json"}, body: body);
+    
+    print(taskDetails);
+  }
+
+  void confirmTaskCompletion(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: const Text('Confirmação'),
+        content: const Text('Confirme que deseja finalizar esta manutenção.'),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text('Cancelar', style: TextStyle(color: Colors.grey[800])),
+          ),
+          TextButton(
+            onPressed: () {
+              completeTask();
+              Navigator.pop(context);
+            },
+            child: Text('Confirmar', style: TextStyle(color: Colors.green[600])),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void completeTask() async {
+    final url = Uri.parse('https://skystop.onrender.com/maintenance/set_status');
+    final jsonBody = {
+      'id': taskDetails['id'],
+      'status': 'COMPLETED'
+    };
+    final body = jsonEncode(jsonBody);
+    final response = await http.post(url, headers: {"Content-Type": "application/json"}, body: body);
+    
+    print(taskDetails);
+
+    loadTaskDetails();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Column(
         children: [
+          const SizedBox(height: 30),
           Row(
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               TextButton(
                 onPressed: () => Navigator.pop(context),
-                child: const Text('✕', style: TextStyle(fontSize: 40, color: Colors.black)),
+                child: const Icon(
+                  Icons.arrow_back,
+                  color: Colors.black,
+                  size: 40
+                )
               ),
             ],
           ),
@@ -112,7 +184,7 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen>{
           ),
           Row(
             children: [
-              Text('Requester', style: TextStyle(color: Colors.grey[800], fontSize: 12)),
+              Text('Requisitor', style: TextStyle(color: Colors.grey[800], fontSize: 12)),
             ]
           ),
           Row(
@@ -138,7 +210,7 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen>{
           const SizedBox(height: 20),
           Row(
             children: [
-              Text('Description', style: TextStyle(color: Colors.grey[800], fontSize: 12)),
+              Text('Descrição', style: TextStyle(color: Colors.grey[800], fontSize: 12)),
             ]
           ),
           Row(
@@ -151,7 +223,7 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen>{
           const SizedBox(height: 20),
           Row(
             children: [
-              Text('Instructions', style: TextStyle(color: Colors.grey[800], fontSize: 12)),
+              Text('Instruções', style: TextStyle(color: Colors.grey[800], fontSize: 12)),
             ]
           ),
           Row(
@@ -164,7 +236,7 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen>{
           const SizedBox(height: 20),
           Row(
             children: [
-              Text('Parts requested for this maintenance', style: TextStyle(color: Colors.grey[800], fontSize: 12)),
+              Text('Peças requeridas para esta manutenção', style: TextStyle(color: Colors.grey[800], fontSize: 12)),
             ]
           ),
           Row(
@@ -207,7 +279,7 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen>{
                       )
                     )
                   ),
-                  SizedBox(
+                  if(taskDetails['status'] != 'COMPLETED') SizedBox(
                     width: 350,
                     height: 60,
                     child: GestureDetector(
@@ -233,7 +305,7 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen>{
           const SizedBox(height: 20),
           Row(
             children: [
-              Text('Parts removed during maintenance', style: TextStyle(color: Colors.grey[800], fontSize: 12)),
+              Text('Peças removidas nesta manutenção', style: TextStyle(color: Colors.grey[800], fontSize: 12)),
             ]
           ),
           Row(
@@ -276,7 +348,7 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen>{
                       )
                     )
                   ),
-                  SizedBox(
+                  if(taskDetails['status'] != 'COMPLETED') SizedBox(
                     width: 350,
                     height: 60,
                     child: GestureDetector(
@@ -302,7 +374,7 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen>{
           const SizedBox(height: 20),
           Row(
             children: [
-              Text('Workers requested for maintenance', style: TextStyle(color: Colors.grey[800], fontSize: 12)),
+              Text('Funcionários requisitados para esta manutenção', style: TextStyle(color: Colors.grey[800], fontSize: 12)),
             ]
           ),
           Row(
@@ -346,7 +418,7 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen>{
                       )
                     )
                   ),
-                  SizedBox(
+                  if(taskDetails['status'] != 'COMPLETED') SizedBox(
                     width: 350,
                     height: 60,
                     child: GestureDetector(
@@ -358,7 +430,7 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen>{
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Text('+', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 28, color: Colors.blue[800]))
+                              Text('+', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 28, color: Colors.orange[800]))
                             ]
                           )
                         )
@@ -386,15 +458,62 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen>{
                       children: [
                         Text(item['label'], style: const TextStyle(fontSize: 16)),
                         Checkbox(
-                          value: false,
-                          onChanged: (newValue) {
-                            item['done'] = newValue;
+                          value: item['done']['data'][0] == 1 ? true : false,
+                          onChanged: (newValue){
+                            setState(() {
+                              item['done']['data'][0] = newValue! ? 1 : 0;
+                            });
+                            setChecklistItem(context, newValue, item['id']);
                           }
                         )
                       ],
                     )
+                  ),
+                  if(taskDetails['status'] != 'COMPLETED') SizedBox(
+                    width: 350,
+                    height: 60,
+                    child: GestureDetector(
+                      onTap: () => addChecklistItem(context, taskDetails['id']),
+                      child: Card(
+                        child: Padding(
+                          padding: const EdgeInsets.all(6),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text('+', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 28, color: Colors.blue[800]))
+                            ]
+                          )
+                        )
+                      )
+                    )
                   )
                 ]
+              )
+            ]
+          ),
+          const SizedBox(height: 40),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              if(taskDetails['status'] != 'COMPLETED') SizedBox(
+                width: 250,
+                child: ElevatedButton(
+                  onPressed: () => confirmTaskCompletion(context),
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStatePropertyAll<Color?>(Colors.green[800]),
+                    foregroundColor: const MaterialStatePropertyAll<Color>(Colors.white),
+                  ),
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text('Finalizar Manutenção', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                      Icon(Icons.check, size: 40)
+                    ],
+                  )
+                )
               )
             ]
           )
