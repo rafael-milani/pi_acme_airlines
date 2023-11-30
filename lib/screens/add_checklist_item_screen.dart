@@ -60,7 +60,6 @@ class AddChecklistItemScreenState extends State<AddChecklistItemScreen> {
               child: TextField(
                 autofocus: true,
                 controller: labelController,
-                keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
                   label: Text('Label'),
                   border: OutlineInputBorder(),

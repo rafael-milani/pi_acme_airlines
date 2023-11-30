@@ -60,7 +60,6 @@ class RequestWorkerScreenState extends State<RequestWorkerScreen> {
               child: TextField(
                 autofocus: true,
                 controller: userController,
-                keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
                   label: Text('E-mail'),
                   border: OutlineInputBorder(),
